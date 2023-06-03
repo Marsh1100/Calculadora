@@ -20,18 +20,24 @@ let signoPor = document.getElementById('signo-por');
 let signoMenos = document.getElementById('signo-menos');
 let signoMas = document.getElementById('signo-mas');
 
-let resultado = document.getElementById('pantalla')
+
+let pantalla = document.getElementById('pantalla');
+let resultado = document.getElementById('resultado')
+let miniOperacion = document.getElementById('mini-operacion')
+
 let limpiar = document.getElementById('all-clear');
 
 let estadoCalculadora = false;
+miniOperacion.style.visibility='hidden';
 // Botón Encender/Apagar calculadora
 apagarEncenderCalculadora.addEventListener('click',function(){
     if (estadoCalculadora){
-        resultado.style.backgroundColor = 'rgb(19, 68, 83)';
+        pantalla.style.backgroundColor = 'rgb(19, 68, 83)';
         estadoCalculadora= false;
+        miniOperacion.style.visibility='hidden';
         resultado.innerHTML="";
     }else{
-        resultado.style.backgroundColor = 'rgb(40 148 181)';
+        pantalla.style.backgroundColor = 'rgb(40 148 181)';
         estadoCalculadora = true;
         resultado.innerHTML="0";
     }
@@ -55,6 +61,7 @@ document.addEventListener('click',function(event){
         //Botón AC (All Clear)
         if(targetElementId=='all-clear'){
             //resultado.innerHTML="Si funciona, wuu!"
+            miniOperacion.style.visibility='hidden';
             resultado.innerHTML="0"
             operacion = false;
 
@@ -62,8 +69,20 @@ document.addEventListener('click',function(event){
         }else if(targetElementId=='signo-igual'){
             // let place = resultado.textContent+targetElementText;
             // resultado.innerHTML=place;
-            let arrayPantalla = resultado.textContent.split(' ');
-            //console.log(arrayPantalla)
+            let textOperacion = resultado.textContent;
+            let arrayPantalla = textOperacion.split(' ');
+
+            /*Creación de nodo hijo
+            const nodeOperacion = document.createElement('p');
+            const textNode = document.createTextNode(textOperacion);
+            nodeOperacion.appendChild(textNode);
+            console.log(nodeOperacion)
+            
+            pantalla.insertBefore(nodeOperacion, pantalla.children[0]);*/
+
+            miniOperacion.innerHTML=textOperacion;
+            miniOperacion.style.visibility='visible';
+
             if(arrayPantalla[arrayPantalla.length-1] != ''){
                 let respuesta;
                 let operador = arrayPantalla[1];
@@ -82,8 +101,16 @@ document.addEventListener('click',function(event){
                     resultado.innerHTML=respuesta;
 
                 }else{
-                    respuesta = Number(arrayPantalla[0])/Number(arrayPantalla[2]);
-                    resultado.innerHTML=respuesta.toFixed(2);
+                    if (arrayPantalla[2]==0){
+                        resultado.innerHTML='NaN';
+                    }else{
+                        respuesta = Number(arrayPantalla[0])/Number(arrayPantalla[2]);
+                        if(Number(arrayPantalla[0])%Number(arrayPantalla[2])==0){
+                            resultado.innerHTML=respuesta;
+                        }else{
+                            resultado.innerHTML=respuesta.toFixed(2);
+                        }
+                    } 
                 }
             }
             operacion = false;
@@ -126,4 +153,6 @@ document.addEventListener('click',function(event){
     
 }); 
 
+// Que no permita hacer 9= ???
+// Mejorar  visualización
 
