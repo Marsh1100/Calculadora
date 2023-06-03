@@ -39,6 +39,7 @@ apagarEncenderCalculadora.addEventListener('click',function(){
 
 // Obtiene el id de todos los clicks que se hagan en el documento 
 let operacion = false;
+let igual = false;
 document.addEventListener('click',function(event){
     
     if(estadoCalculadora){
@@ -48,8 +49,8 @@ document.addEventListener('click',function(event){
         let num1;
         let num2;
 
-        console.log(targetElementId)
-        console.log(targetElementText)
+        //console.log(targetElementId)
+        //console.log(targetElementText)
         
         //Botón AC (All Clear)
         if(targetElementId=='all-clear'){
@@ -57,11 +58,12 @@ document.addEventListener('click',function(event){
             resultado.innerHTML="0"
             operacion = false;
 
+
         }else if(targetElementId=='signo-igual'){
             // let place = resultado.textContent+targetElementText;
             // resultado.innerHTML=place;
             let arrayPantalla = resultado.textContent.split(' ');
-            console.log(arrayPantalla)
+            //console.log(arrayPantalla)
             if(arrayPantalla[arrayPantalla.length-1] != ''){
                 let respuesta;
                 let operador = arrayPantalla[1];
@@ -85,18 +87,25 @@ document.addEventListener('click',function(event){
                 }
             }
             operacion = false;
-
+            igual =  true;
         }else if(targetElementId=='signo-div' || targetElementId=='signo-por' || targetElementId=='signo-menos' || targetElementId=='signo-mas'){
 
             if(!operacion){
                 let place =resultado.textContent+' '+targetElementText+' ';
                 resultado.innerHTML=place;
                 operacion = true;
+                igual = false;
             }
             
         }else{
+            console.log(igual)
             let place;
-            if(resultado.textContent!=0){
+            console.log(resultado.textContent)
+            if(igual){
+                place = targetElementText;
+                igual = false;
+            }
+            else if(resultado.textContent!=0){
                 place = resultado.textContent+targetElementText;
             }else{
                 place = targetElementText;
