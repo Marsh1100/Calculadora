@@ -1,0 +1,104 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+};
+body{
+    background-color: antiquewhite;
+}
+.contenedor{
+
+    position: absolute;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: salmon;
+    width: 40vh;
+    height: 50vh;
+
+    display:grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto auto ;
+
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.pantalla{
+    grid-area: 1/1/2/3;
+    background-color: rgb(19, 68, 83);
+    color: rgb(6, 21, 26);
+
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    
+    padding: 20px;
+    border-radius: 15px;
+
+    height: 10vh;
+}
+
+.botonEncender{
+    grid-area: 2/1/2/3;
+    
+    display: flex;
+    flex-direction: row-reverse;
+    
+}
+.apagar{
+    width: 6vh;
+    height: 3vh;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+
+}
+.numeros{
+    grid-area: 3/1/4/2;
+    background-color: rgb(168, 4, 4);
+
+    display: grid;
+    grid-template-columns: auto auto auto;
+    
+    align-content: space-evenly;
+    justify-content: space-evenly;
+
+    place-items: center;
+    border-radius: 15px;
+}
+
+.num1,.num2,.num3,.num4,.num5,.num6,.num7,.num8,.num9,.num0,.igual{
+    width: 6vh;
+    height: 6vh;
+
+    border-radius: 15px;
+    background-color: blanchedalmond;
+
+    display: grid;
+    place-items: center;
+}
+
+.operadores{
+    grid-area: 3/2/4/3;
+    display: grid;
+    align-content: space-evenly;
+    justify-content: end;
+}
+
+.div,.por,.menos,.mas,.limpiar{
+    width: 6vh;
+    height: 6vh;
+
+    border-radius: 15px;
+    background-color: blanchedalmond;
+
+    display: grid;
+    place-items: center;
+}
+
+button{
+    border-color:white;
+}
