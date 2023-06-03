@@ -26,72 +26,95 @@ let limpiar = document.getElementById('all-clear');
 let estadoCalculadora = false;
 // Botón Encender/Apagar calculadora
 apagarEncenderCalculadora.addEventListener('click',function(){
-    
+    if (estadoCalculadora){
+        resultado.style.backgroundColor = 'rgb(19, 68, 83)';
+        estadoCalculadora= false;
+        resultado.innerHTML="";
+    }else{
+        resultado.style.backgroundColor = 'rgb(40 148 181)';
+        estadoCalculadora = true;
+        resultado.innerHTML="0";
+    }
 });
 
-//Botón AC (All Clear)
-/* limpiar.addEventListener('click',function(){
-    if(estadoCalculadora){
-        resultado.innerHTML=""
-    }
-}); */
-
-
-
 // Obtiene el id de todos los clicks que se hagan en el documento 
+let operacion = false;
 document.addEventListener('click',function(event){
-    if(!estadoCalculadora){
+    
+    if(estadoCalculadora){
         let targetElementId = event.target.id;
         let targetElementText = event.target.textContent;
-        console.log(targetElementId)
 
+        let num1;
+        let num2;
+
+        console.log(targetElementId)
+        console.log(targetElementText)
         
-        if(targetElementId =='apagar-cal'){
-            if (estadoCalculadora){
-                resultado.style.backgroundColor = 'rgb(19, 68, 83)';
-                estadoCalculadora= false;
-                resultado.innerHTML="";
-            }else{
-                resultado.style.backgroundColor = 'rgb(40 148 181)';
-                estadoCalculadora = true;
-                resultado.innerHTML="0";
-            }
-        }
         //Botón AC (All Clear)
-        else if(targetElementId=='all-clear'){
+        if(targetElementId=='all-clear'){
             //resultado.innerHTML="Si funciona, wuu!"
             resultado.innerHTML="0"
+            operacion = false;
 
-        }else if(targetElementId=='signo-div'){
-            let place = Number(resultado.textContent+"÷");
-            console.log(place);
-            resultado.innerHTML=place;
-            
-        }else if(targetElementId=='num0'){
-            
-            if(resultado.textContent!=0){
-            let place = Number(resultado.textContent+"0");
-            console.log(place);
-            resultado.innerHTML=place;
+        }else if(targetElementId=='signo-igual'){
+            // let place = resultado.textContent+targetElementText;
+            // resultado.innerHTML=place;
+            let arrayPantalla = resultado.textContent.split(' ');
+            console.log(arrayPantalla)
+            if(arrayPantalla[arrayPantalla.length-1] != ''){
+                let respuesta;
+                let operador = arrayPantalla[1];
+                console.log(operador)
+                if(operador=='-'){
+                    respuesta = Number(arrayPantalla[0])-Number(arrayPantalla[2]);
+                    resultado.innerHTML=respuesta;
+
+                }else if(operador=='+'){
+                    respuesta = Number(arrayPantalla[0])+Number(arrayPantalla[2]);
+                    console.log(respuesta)
+                    resultado.innerHTML=respuesta;
+
+                }else if(operador=='x'){
+                    respuesta = Number(arrayPantalla[0])*Number(arrayPantalla[2]);
+                    resultado.innerHTML=respuesta;
+
+                }else{
+                    respuesta = Number(arrayPantalla[0])/Number(arrayPantalla[2]);
+                    resultado.innerHTML=respuesta.toFixed(2);
+                }
             }
+            operacion = false;
+
+        }else if(targetElementId=='signo-div' || targetElementId=='signo-por' || targetElementId=='signo-menos' || targetElementId=='signo-mas'){
+
+            if(!operacion){
+                let place =resultado.textContent+' '+targetElementText+' ';
+                resultado.innerHTML=place;
+                operacion = true;
+            }
+            
         }else{
-            let place = Number(resultado.textContent+targetElementText);
+            let place;
+            if(resultado.textContent!=0){
+                place = resultado.textContent+targetElementText;
+            }else{
+                place = targetElementText;
+            }
             console.log(place);
 
-            if(targetElementText != NaN){
-                resultado.innerHTML=place;
+            if(targetElementId != 'apagar-cal' && targetElementId != ""){
+                resultado.innerHTML=(place);
             }
             
         };
 
-        
-
-
+    }
         
         /* let place = Number(resultado.textContent+"1");
         console.log(place);
         resultado.innerHTML=place; */
-    }
+    
 }); 
 
 
